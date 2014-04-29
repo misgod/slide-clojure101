@@ -462,15 +462,15 @@ A recursive factorial sample
 (defn fib1
   "simple version"
   [n]
-  (cond
-    (< n 2) 1
-    :else (+ (fib1 (- n 2)) (fib1 (- n 1)))))
+  (if (< n 2)
+    n
+    (+ (fib1 (- n 2)) (fib1 (- n 1)))))
 ```
 ```clojure
 (fib 7) ;=> 13
 
 (take 10 (map fib1 (range))) 
-;=> (1 1 2 3 5 8 13 21 34 55)
+;=> (0 1 1 2 3 5 8 13 21 34)
 
 ```
 
@@ -485,10 +485,9 @@ A recursive factorial sample
 (defn fib2
   "memo version"
   [n]
-  (cond
-   (zero? n) 0
-   (= n 1) 1
-   :else (+' (mfib (- n 2)) (mfib (- n 1)))))
+  (if (< n 2)
+    n
+    (+' (mfib (- n 2)) (mfib (- n 1)))))
 
 (def mfib (memoize fib2))
 ```
@@ -509,9 +508,9 @@ A recursive factorial sample
   "Tail Recursion"
   [n]
   (let [f (fn [i p acc]
-            (cond
-             (zero? i) p
-             :else (recur (dec i) acc (+' acc p))))]
+            (if (zero? i)
+              p
+              (recur (dec i) acc (+' acc p))))]
     (f n 0 1)))
 ```
 
@@ -555,7 +554,6 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 --- .segue  .dark
 ## Live Demo
 
-
 --- .segue .dark
 ## Q & A
 
@@ -576,3 +574,6 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
   
 * Toolbox 
   - http://www.clojure-toolbox.com/
+  
+* Cheatsheet
+  - http://clojure.org/cheatsheet

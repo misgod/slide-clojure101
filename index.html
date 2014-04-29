@@ -716,15 +716,15 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 <pre><code class="clojure">(defn fib1
   &quot;simple version&quot;
   [n]
-  (cond
-    (&lt; n 2) 1
-    :else (+ (fib1 (- n 2)) (fib1 (- n 1)))))
+  (if (&lt; n 2)
+    n
+    (+ (fib1 (- n 2)) (fib1 (- n 1)))))
 </code></pre>
 
 <pre><code class="clojure">(fib 7) ;=&gt; 13
 
 (take 10 (map fib1 (range))) 
-;=&gt; (1 1 2 3 5 8 13 21 34 55)
+;=&gt; (0 1 1 2 3 5 8 13 21 34)
 
 </code></pre>
 
@@ -746,10 +746,9 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 <pre><code class="clojure">(defn fib2
   &quot;memo version&quot;
   [n]
-  (cond
-   (zero? n) 0
-   (= n 1) 1
-   :else (+&#39; (mfib (- n 2)) (mfib (- n 1)))))
+  (if (&lt; n 2)
+    n
+    (+&#39; (mfib (- n 2)) (mfib (- n 1)))))
 
 (def mfib (memoize fib2))
 </code></pre>
@@ -778,9 +777,9 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   &quot;Tail Recursion&quot;
   [n]
   (let [f (fn [i p acc]
-            (cond
-             (zero? i) p
-             :else (recur (dec i) acc (+&#39; acc p))))]
+            (if (zero? i)
+              p
+              (recur (dec i) acc (+&#39; acc p))))]
     (f n 0 1)))
 </code></pre>
 
@@ -879,6 +878,11 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 
 <ul>
 <li><a href="http://www.clojure-toolbox.com/">http://www.clojure-toolbox.com/</a></li>
+</ul></li>
+<li><p>Cheatsheet</p>
+
+<ul>
+<li><a href="http://clojure.org/cheatsheet">http://clojure.org/cheatsheet</a></li>
 </ul></li>
 </ul>
 
