@@ -2,15 +2,13 @@
 title       : Clojure 101
 subtitle    : Lisp + Functional + Dynamic = Fun
 author      : SzuHsien Lee
-job         : 
+job         : A software engineer on the street
+license     : by-nc-sa
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : solarized_light     # 
-widgets     : [mathjax, bootstrap, quiz]  # {mathjax, quiz, bootstrap}       
+widgets     : []  # {mathjax, quiz, bootstrap}       
 mode        : selfcontained # {standalone, draft}
-github:
-  user: misgod
-  repo: slide-clojure101
 logo        : icon.png
 ---
 <style>
@@ -203,7 +201,7 @@ r {
 (class 1) ;=> java.lang.Long
 ```
 
---- #CCC
+--- bg:#CCC
 ### Alan J. Perlis (Epigrams on Programming)
 
 <q>"It is better to have 100 functions operate on one data structure than to have 10 functions operate on 10 data structures." </q>
