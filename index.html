@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clojure 101</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Clojure 101">
+  <meta name="author" content="SzuHsien Lee">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/solarized_light.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="libraries/widgets/bootstrap/css/bootstrap.css"></link>
+<link rel=stylesheet href="libraries/widgets/quiz/css/demo.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/icon.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Clojure 101</h1>
+    <h2>Lisp + Functional + Dynamic = Fun</h2>
+    <p>SzuHsien Lee<br/></p>
+  </hgroup>
+    <a href="https://github.com/misgod/slide-clojure101/zipball/gh-pages" class="example">
+     Download
+    </a>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <style>
+.dark q {
+  color: white;
+}
+
+g {
+  color: green;
+}
+
+r {
+  color: red;
+}
+
+
+
+</style>
+
+<h2>Outline</h2>
+
+<ul>
+<li><p>Overview</p></li>
+<li><p>Clojure Fundamentals</p></li>
+<li><p>Functional Programming in Clojure</p></li>
+<li><p>Code Example</p></li>
+<li><p>Q &amp; A</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:#CCC;">
+  <hgroup>
+    <h3>Alan J. Perlis (Epigrams on Programming)</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><q>&quot;A language that doesn&#39;t affect the way you think about programming, is not worth knowing. &quot; </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>Year</th>
+<th>Language</th>
+<th>Year</th>
+<th>Language</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1957</td>
+<td>FORTRAN</td>
+<td>1993</td>
+<td>Ruby</td>
+</tr>
+<tr>
+<td>1958</td>
+<td>LISP</td>
+<td>1993</td>
+<td>Lua</td>
+</tr>
+<tr>
+<td>1959</td>
+<td>COBOL</td>
+<td>1995</td>
+<td>JavaScript</td>
+</tr>
+<tr>
+<td>1964</td>
+<td>BASIC</td>
+<td>1995</td>
+<td>Java</td>
+</tr>
+<tr>
+<td>1970</td>
+<td>Forth</td>
+<td>1995</td>
+<td>PHP</td>
+</tr>
+<tr>
+<td>1972</td>
+<td>C</td>
+<td>2000</td>
+<td>ActionScript</td>
+</tr>
+<tr>
+<td>1972</td>
+<td>Smalltalk</td>
+<td>2001</td>
+<td>C#</td>
+</tr>
+<tr>
+<td>1983</td>
+<td>C++</td>
+<td>2001</td>
+<td>Visual Basic .NET</td>
+</tr>
+<tr>
+<td>1984</td>
+<td>Common Lisp</td>
+<td>2002</td>
+<td>F#</td>
+</tr>
+<tr>
+<td>1986</td>
+<td>Objective-C</td>
+<td>2003</td>
+<td>Groovy</td>
+</tr>
+<tr>
+<td>1986</td>
+<td>Erlang</td>
+<td>2003</td>
+<td>Scala</td>
+</tr>
+<tr>
+<td>1987</td>
+<td>Perl</td>
+<td>2007</td>
+<td><r>Clojure</r></td>
+</tr>
+<tr>
+<td>1990</td>
+<td>Haskell</td>
+<td>2009</td>
+<td>Go</td>
+</tr>
+<tr>
+<td>1991</td>
+<td>Python</td>
+<td>2011</td>
+<td>Dart</td>
+</tr>
+<tr>
+<td>1991</td>
+<td>Visual Basic</td>
+<td>2012</td>
+<td>Rust</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Clojure Status</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>started in 2007</li>
+<li>Original author: Rich Hickey</li>
+<li>Latest Stable Release: 1.6.0 (April, 2014)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>What is Clojure?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>Lisp dialect (Code as data)</li>
+<li>Dynamic </li>
+<li>Functional (immutability)</li>
+<li>General-purpose </li>
+<li>Compiled</li>
+<li>Hosted on JVM, also CLR and JavaScript</li>
+<li>Open Source under Eclipse Public License</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Why use Clojure</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>More fun &amp; less code</li>
+<li>Focus on problem</li>
+<li>Supporting concurrency by default</li>
+<li>Interactive programming</li>
+<li>Robust, practical &amp; high-performance</li>
+<li>Java ecosystem</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Development environment</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>REPL</p></li>
+<li><p>Light Table (newbie)</p></li>
+<li><p>Eclipse with Counterclockwise</p></li>
+<li><p>Intellij IDEA with La Clojure</p></li>
+<li><p>Emacs with emacs-live (recommend)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Clojure Fundamentals</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Hello World</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(defn hello
+  &quot;Say hello world!&quot;
+  [] (println &quot;Hello World!&quot;))
+
+</code></pre>
+
+<pre><code class="clojure">(hello)
+;Hello World!
+;=&gt; nil
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Hello World with parameter</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(defn hello
+  &quot;Say hello to someone!&quot;
+  ([] (println &quot;Hello World&quot;))
+  ([someone] (println &quot;Hello&quot; someone)))
+
+</code></pre>
+
+<pre><code class="clojure">(hello)
+;Hello World!
+;=&gt; nil
+
+(hello &quot;Sam&quot;)
+;Hello Sam
+;=&gt; nil
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Actomic Data Types</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Boolean:  <g> true false </g></p></li>
+<li><p>Number:  <g> 1234567890876544321, 1e65, 2r1010, 1.23, 25/7 </g></p></li>
+<li><p>String:  <g> &quot;hello&quot; </g></p></li>
+<li><p>Character:  <g> \c \b \a \space \newline \tab </g></p></li>
+<li><p>Null:  <g> nil </g></p></li>
+<li><p>Symbol:  <g> def read zero? +  </g></p></li>
+<li><p>Keyword:  <g> :fred :ethel </g></p></li>
+<li><p>Regex pattern:  <g> #&quot;...pattern...&quot; </g></p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Some Demo</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(+ 1 2) ;=&gt; 3
+(* 1 3) ;=&gt; 3
+(- 3 2) ;=&gt; 1 
+(/ 8 2) ;=&gt; 4
+(+ 1 2 3) ;=&gt; 6
+(/ 3 5) ;=&gt; 3/5
+(* 5 (/ 3 5)) ;=&gt; 3N
+
+(not true) ;=&gt; false
+(= &quot;aa&quot; (str &quot;a&quot; &quot;a&quot;) ) ;=&gt; true
+(= 1 1) ;=&gt; true
+
+(str &quot;hello&quot; &quot;-&quot; &quot;world&quot; &quot;!&quot;) ;=&gt; hello-world!
+
+(identical? &quot;aa&quot; (str &quot;a&quot; &quot;a&quot;)) ;=&gt; false
+(nil? nil) ;=&gt; true 
+
+(class &quot;hello&quot;) ;=&gt; java.lang.String
+(class 1) ;=&gt; java.lang.Long
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="CCC" style="background:;">
+  <hgroup>
+    <h3>Alan J. Perlis (Epigrams on Programming)</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><q>&quot;It is better to have 100 functions operate on one data structure than to have 10 functions operate on 10 data structures.&quot; </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Clojure Data Structures</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>List: <g> (1 2 3 4 5), (&quot;abc&quot; &quot;bac&quot; &quot;aaa&quot;), (list 1 2 3) </g></p></li>
+<li><p>Vector: <g> [1 2 3 4 5], [Mon Tue Wen Thu] </g></p></li>
+<li><p>Map: <g> {:a 1, :b 2, :c 3}, {1 &quot;one&quot; 2 &quot;two&quot;} </g></p></li>
+<li><p>Set: <g> #{&quot;foo&quot; &quot;bar&quot; &quot;baz&quot;} </g></p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Some Code</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(class [1 2 3]) ;=&gt; clojure.lang.PersistentVector
+(class &#39;(1 2 3)) ;=&gt; clojure.lang.PersistentList
+(class #{1 2 3}) ;=&gt; clojure.lang.PersistentHashSet
+(class {:k1 1 :k2 2}) ;=&gt; clojure.lang.PersistentArrayMap
+
+(str 2 3) ;=&gt; 23
+&#39;(str 2 3) ;=&gt; (str 2 3)
+(eval &#39;(str 2 3)) ;=&gt;23
+
+(coll? [1 2 3]) ;=&gt; true
+(coll? &#39;(1 2 3)) ;=&gt; true
+(coll? #{1 2 3}) ;=&gt; true
+(coll? {1 2 3 4}) ;=&gt; true
+
+;;Seqs are an interface for logical lists, which can be lazy.
+(seq? [1 2 3]) ;=&gt; false
+(seq? &#39;(1 2 3)) ;=&gt; true
+(seq? #{1 2 3}) ;=&gt; false
+(seq? {1 2 3 4}) ;=&gt; false
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Some Code (cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(range 5) ;=&gt; (0 1 2 3 4)
+(range) ;=&gt; (0 1 2 3 4 5 ...∞) ;lazy
+(take 5 (range)) ;=&gt; (0 1 2 3 4)
+(nth (range) 3) ;=&gt; 3
+
+;;Use cons to add an item to the beginning of a list or vector
+(cons 4 [1 2 3]) ; =&gt; (4 1 2 3)
+(cons 4 &#39;(1 2 3)) ; =&gt; (4 1 2 3)
+;;Add to the beginning of a list, or the end of a vector
+(conj [1 2 3] 4) ; =&gt; [1 2 3 4]
+(conj &#39;(1 2 3) 4) ; =&gt; (4 1 2 3)
+
+(concat [1 2] &#39;(3 4)) ;=&gt; (1 2 3 4)
+
+(first &#39;(1 2 3)) ;=&gt; 1
+(rest &#39;(1 2 3))  ;=&gt; (2 3)
+(rest ()) ;=&gt; ()
+(empty? ()) ;=&gt; true
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Some Code (cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(apply + [1 2 3 4]) ;=&gt; 10
+
+(count [0 1 2 3]) ;=&gt; 4
+
+(def mymap {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &quot;Samsung&quot;}) ;=&gt; #&#39;user/mymap
+
+(count mymap) ;=&gt; 4
+
+(mymap :a) ;=&gt; &quot;Apple&quot;
+(:g mymap) ;=&gt; &quot;Google&quot;
+
+(= mymap (hash-map :g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &quot;Samsung&quot;)) ;=&gt; true
+
+(assoc mymap &quot;o&quot; &quot;Oracle&quot;) ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :o &quot;Oracle :h &quot;htc&quot; :s &quot;Samsung&quot;}
+(dissoc mymap :s :h :a) ;=&gt; {:g &quot;Google&quot;}
+
+mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &quot;Samsung&quot;}  ;; immutable
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Functional programming in Clojure</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>What is Functional programming</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><q>
+<strong>Functional programming</strong> is a style of building the structure and elements of computer programs, that treats computation as the evaluation of mathematical functions and avoids state and mutable data. </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Functional Progamming Features</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>First-class functions</p></li>
+<li><p>Immutability</p></li>
+<li><p>Pure functions (no side effect)</p></li>
+<li><p>Recursion</p></li>
+<li><p>Expression</p></li>
+<li><p>Compose functions</p></li>
+<li><p>Lazy evaluation</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>First-class functions</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Passing functions as arguments</h3>
+
+<pre><code class="clojure">(def square (fn [x] (* x x))) ;=&gt; #&#39;user/square
+
+(def add2 (fn [x] (+ 2 x))) ;=&gt; #&#39;user/add2
+
+(defn sum-by [x f] 
+  (apply + (map f x))) ;=&gt; #&#39;user/sum-by
+
+(sum-by [1 2 3] square) ;=&gt; 14
+
+(sum-by [1 2 3] add2) ;=&gt; 12
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>First-class functions (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Returning function as value</h3>
+
+<pre><code class="clojure">(defn power [base]
+  &quot;Return a power function based on passing argument&quot;
+  (let [b base]
+    (fn [exp] (Math/pow  b exp))))
+
+(def base2 (power 2))
+
+(def base5 (power 5))
+
+
+(base2 10) ;=&gt; 1024
+
+(base5 2) ;=&gt; 25
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Recursion</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A recursive factorial sample</p>
+
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="http://mitpress.mit.edu/sicp/full-text/sicp/book/chapter-1/figs/fact-shape.gif" alt=""></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <pre><code class="Clojure">(defn factorial [n]
+  (if (= 1 n)
+    1
+    (* n (factorial (dec n)))))
+</code></pre>
+
+<pre><code class="clojure">(factorial 6) ;=&gt; 720
+
+(factorial 10000N) ;=&gt; StackOverFlowError
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Tail-recursion</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(def factorial2
+  (fn [n]
+    (loop [i n acc 1]
+       (if (zero? i)
+            acc
+            (recur (dec i) (* acc i))))))
+</code></pre>
+
+<pre><code class="clojure">(factorial 6) ;=&gt; 720
+
+(factorial 10000N) ;=&gt; ...
+</code></pre>
+
+<h3>But ...</h3>
+
+<ul class = "build incremental">
+<li>JVM does not support tail-call optimization.</li>
+<li>So <strong>recur</strong> is the only non-stack-consuming looping construct in Clojure.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Comp and Partial</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Partial functions</h3>
+
+<pre><code class="clojure">(def add5 (partial + 5)) ;=&gt; #&#39;user/add5
+
+(add5 5) ;=&gt; 10
+
+((partial + 5) 5) ;=&gt; 10
+</code></pre>
+
+<h3>Compose functions</h3>
+
+<pre><code class="clojure">(def not-zero? (comp not zero?)) 
+
+(not-zero? 1) ;=&gt; true
+(not-zero? 0) ;=&gt; false
+
+((comp second reverse) &#39;(&quot;a&quot; 2 3 &quot;b&quot;)) ;=&gt; 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Map, Reduce and Filter</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="Clojure">(def data &#39;(1 2 3 4 5))
+
+(defn square [x] (* x x))
+
+(map square data) ;=&gt; (1 4 9 16 25)
+(map #(* % %) data) ;=&gt; (1 4 9 16 25)
+
+(filter odd? data) ;=&gt; (1 3 5)
+(filter #(&gt; % 5) data) ;=&gt; ()
+(filter (partial &lt; 3) data) ;=&gt; (4 5)
+
+(reduce * data) ;=&gt; 120
+(reduce str data) ;=&gt; &quot;12345&quot;
+(reduce #(str %2 %1) data) ;=&gt; &quot;54321&quot;
+
+(take 5 (filter odd? (range))) ;=&gt; (1 3 5 7 9)
+(take 5 (map #(+ % %) (range))) ;=&gt; (0 2 4 6 8)
+
+(reduce + (range)) ;=&gt; non-stop ..
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Fibonacci Series Example</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Simple recursive version</h3>
+
+<pre><code class="clojure">(defn fib1
+  &quot;simple version&quot;
+  [n]
+  (cond
+    (&lt; n 2) 1
+    :else (+ (fib1 (- n 2)) (fib1 (- n 1)))))
+</code></pre>
+
+<pre><code class="clojure">(fib 7) ;=&gt; 13
+
+(take 10 (map fib1 (range))) 
+;=&gt; (1 1 2 3 5 8 13 21 34 55)
+
+</code></pre>
+
+<ul class = "build incremental">
+<li>Very slow</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>Fibonacci Series Example (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Memoized recursive version</h3>
+
+<pre><code class="clojure">(defn fib2
+  &quot;memo version&quot;
+  [n]
+  (cond
+   (zero? n) 0
+   (= n 1) 1
+   :else (+&#39; (mfib (- n 2)) (mfib (- n 1)))))
+
+(def mfib (memoize fib2))
+</code></pre>
+
+<pre><code class="clojure">(mfib 1000) ;=&gt; StackOverflowError
+
+(take 10000 (map mfib (range))) ;=&gt; (0 1 1 ...)
+</code></pre>
+
+<ul class = "build incremental">
+<li>Speed up but StackOverflowError</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Fibonacci Series Example (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Tail recursion version</h3>
+
+<pre><code class="clojure">(defn fib3
+  &quot;Tail Recursion&quot;
+  [n]
+  (let [f (fn [i p acc]
+            (cond
+             (zero? i) p
+             :else (recur (dec i) acc (+&#39; acc p))))]
+    (f n 0 1)))
+</code></pre>
+
+<ul class = "build incremental">
+<li>complicate....</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Fibonacci Series Example (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Lazy version -1</h3>
+
+<pre><code class="clojure">(defn fib4 []
+  (letfn [(f [p c]
+            (cons c (lazy-seq (f c (+&#39; p c)))))]
+    (f 0 1)))
+
+</code></pre>
+
+<pre><code class="clojure">(fib4)  ;=&gt; (0 1 1 2 3 5 8 ...)
+
+(nth (fib4) 100000) ;=&gt; (A very long number...)
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Fibonacci Series Example (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Lazy version -2</h3>
+
+<pre><code class="clojure">(def fib5 (lazy-cat [0 1] (map +&#39; fib5 (rest fib5))))
+</code></pre>
+
+<pre><code class="clojure">fib5  ;=&gt; (0 1 1 2 3 5 8 ...)
+
+(take 10 fib5) ;=&gt; (0 1 1 2 3 5 8 13 21 34)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>Live Demo</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>Q &amp; A</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <hgroup>
+    <h2>Some Learning Material</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Online</p>
+
+<ul>
+<li>Try Clojure (<a href="http://tryclj.com/">http://tryclj.com/</a>)</li>
+<li>Clojure Koans (<a href="http://clojurekoans.com/">http://clojurekoans.com/</a>)</li>
+<li>4clojure (<a href="https://www.4clojure.com/">https://www.4clojure.com/</a>) (good!)</li>
+<li>ClojureTV on Youtube</li>
+</ul></li>
+<li><p>Books</p>
+
+<ul>
+<li>Clojure Programming (<a href="http://www.clojurebook.com/">http://www.clojurebook.com/</a>)</li>
+<li>The Joy of Clojure (Not for beginner)</li>
+</ul></li>
+<li><p>Toolbox </p>
+
+<ul>
+<li><a href="http://www.clojure-toolbox.com/">http://www.clojure-toolbox.com/</a></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title=''>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Alan J. Perlis (Epigrams on Programming)'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Overview'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Clojure Status'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='What is Clojure?'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Why use Clojure'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Development environment'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Clojure Fundamentals'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Hello World'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Hello World with parameter'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Actomic Data Types'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Some Demo'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Alan J. Perlis (Epigrams on Programming)'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Clojure Data Structures'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Some Code'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Some Code (cont.)'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Some Code (cont.)'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Functional programming in Clojure'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='What is Functional programming'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Functional Progamming Features'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='First-class functions'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='First-class functions (Cont.)'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Recursion'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Tail-recursion'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Comp and Partial'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Map, Reduce and Filter'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Fibonacci Series Example'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Fibonacci Series Example (Cont.)'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Fibonacci Series Example (Cont.)'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Fibonacci Series Example (Cont.)'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Fibonacci Series Example (Cont.)'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Live Demo'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Q &amp; A'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Some Learning Material'>
+         35
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  <script src="libraries/widgets/bootstrap/js/bootstrap.min.js"></script>
+<script src="libraries/widgets/bootstrap/js/bootbox.min.js"></script>
+<script src="libraries/widgets/quiz/js/jquery.quiz.js"></script>
+<script src="libraries/widgets/quiz/js/mustache.min.js"></script>
+<script src="libraries/widgets/quiz/js/quiz-app.js"></script>
+
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<script>  
+  $(function (){ 
+    $("#example").popover(); 
+    $("[rel='tooltip']").tooltip(); 
+  });  
+  </script>  
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
