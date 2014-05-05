@@ -40,6 +40,10 @@ r {
 
 * Code Example
 
+* Java Interop
+
+* Marco
+
 * Q & A
 
 
@@ -77,8 +81,12 @@ r {
 ## Clojure Status
 
 * started in 2007
+
 * Original author: Rich Hickey
+
 * Latest Stable Release: 1.6.0 (April, 2014)
+
+* Open Source under Eclipse Public License
 
 ---
 ## What is Clojure?
@@ -89,7 +97,7 @@ r {
 > * General-purpose 
 > * Compiled
 > * Hosted on JVM, also CLR and JavaScript
-> * Open Source under Eclipse Public License
+
 
 ---
 ## Why use Clojure
@@ -117,6 +125,12 @@ r {
 --- .segue .dark
 
 ## Clojure Fundamentals
+
+---
+## S-Expressions
+
+
+
 
 ---
 ## Hello World
@@ -318,6 +332,10 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 
 * Lazy evaluation
 
+---
+## Functional Programming vs. Imperative Programming
+
+//TODO...
 
 ---
 ## First-class functions
@@ -383,28 +401,64 @@ A recursive factorial sample
 (factorial 10000N) ;=> StackOverFlowError
 ```
 
----
+--- &twocol w1:40% w2:60%
 ## Tail-recursion
 
+*** =left
+
+```
+fact 8
+= f 6 1
+= f 5 6
+= f 4 30
+= f 3 120
+= f 2 360
+= f 1 720
+= f 720
+```
+
+*** =right
 ```clojure
-(def factorial2
-  (fn [n]
-    (loop [i n acc 1]
-       (if (zero? i)
-            acc
-            (recur (dec i) (* acc i))))))
+(defn fact [n]
+  (letfn [(f [i a]
+            (if (<= i 1)
+              a
+              (f (dec i) (* i a))))]
+    (f n 1)))    
+
+```
+### But ... 
+> * JVM does not support tail-call optimization.
+> * So still StackOverFlowError by (fact 10000)
+
+---
+## Tail-recursion with **recur**
+
+```clojure
+(defn fact [n]
+  (loop [i n a 1]
+    (if (<= i 1) 
+      a 
+      (recur (dec i) (* i a)))))
 ```
 
 ```clojure 
-(factorial 6) ;=> 720
+(fact 6) ;=> 720
 
-(factorial 10000N) ;=> ...
+(fact 10000N) ;=> ...
 ```
-
-### But ... 
-
+### But 
 > * JVM does not support tail-call optimization.
 > * So **recur** is the only non-stack-consuming looping construct in Clojure.
+
+* more concise way
+
+```clojure
+(defn fact [n]
+  (apply * (range 1 (inc n))))
+
+```
+
 
 ---
 ## Comp and Partial
@@ -459,9 +513,7 @@ A recursive factorial sample
 ### Simple recursive version
 
 ```clojure
-(defn fib1
-  "simple version"
-  [n]
+(defn fib1 [n]
   (if (< n 2)
     n
     (+ (fib1 (- n 2)) (fib1 (- n 1)))))
@@ -482,9 +534,7 @@ A recursive factorial sample
 ### Memoized recursive version
 
 ```clojure
-(defn fib2
-  "memo version"
-  [n]
+(defn fib2 [n]
   (if (< n 2)
     n
     (+' (mfib (- n 2)) (mfib (- n 1)))))
@@ -504,9 +554,7 @@ A recursive factorial sample
 
 ### Tail recursion version
 ```clojure
-(defn fib3
-  "Tail Recursion"
-  [n]
+(defn fib3 [n]
   (let [f (fn [i p acc]
             (if (zero? i)
               p
@@ -551,8 +599,150 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 (take 10 fib5) ;=> (0 1 1 2 3 5 8 13 21 34)
 ```
 
---- .segue  .dark
-## Live Demo
+---
+## Clojure in JVM
+
+* Clojure strings are Java Strings.
+
+* Clojure nil is Java’s null.
+
+* Clojure numbers are Java numbers.
+
+* Clojure regular expressions are instances of <b>java.util.regex.Pattern</b>.
+
+* Clojure implement the appropriate read-only java.util.\* collection interfaces
+  - Clojure maps implement <b>java.util.Map</b>
+  - Clojure vectors and sequences and lists implement <b>java.util.List</b>
+  - Clojure sets implement <b>java.util.Set</b>
+
+* Clojure functions implement <b>java.lang.Runnable</b> and <b>java.util.concurrent.Callable</b>
+
+
+---
+## Java Interop
+
+```Clojure
+(.toUpperCase "abc") ;=> ABC
+
+;; static method
+(Integer/parseInt "10") ;=> 10
+
+;; new Object
+(java.io.File. "~/test.txt") ;=> #<File ~/test.txt>
+
+(instance? String "foo")  ;=> true
+```
+
+```Clojure
+(import java.util.ArrayList)
+(def foo (ArrayList. [1 2 3 4]))
+
+(reduce + foo) ;=> 10
+
+(seq foo) ;=> (1 2 3 4)
+
+(.containsAll foo [2 3 4]) ;=> 4
+
+
+```
+
+---
+## Java Interop (Cont.) 
+
+```Clojure
+;;; Modify object's field
+(def pt (java.awt.Point. 5 10))  ;=> #'user/pt
+
+(.x pt)  ;=> 5
+(set! (.x pt) 10) ;=> 10
+(.x pt) ;=> 10
+```
+
+```Clojure
+;;; Type hints
+(defn #^String reverse
+  [#^String s]
+  (clojure.string/reverse s)) 
+
+(capitalize "abcd") ;=> "dcba"
+
+```
+---
+## doto
+
+```Clojure
+(import javax.swing.JFrame)
+
+(doto (JFrame.)
+  (.setTitle "title")
+  (.setBackground java.awt.Color/white)
+  (.setSize (java.awt.Dimension. 500 500))
+  (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE)
+  (.setVisible true))
+
+```
+
+
+--- &twocol w1:40% w2:60%
+## Macro
+
+*** =left
+![](http://images.cnitblog.com/blog/17329/201303/18183535-cb7fa8bff7f04c45ac1ec277ca779025.png)
+
+
+*** =right
+
+* Lisp is a programmable programming languages.
+
+* Homoiconicity
+  - Code written in the language is encoded as data structures.
+  
+* Extends your tool in compile time.
+
+---
+## Macro 
+
+A simple macro example..
+
+
+```clojure
+(defmacro postfix
+  [expr]
+  (conj (butlast expr) (last expr)))
+
+(macroexpand-1 '(postfix (1 1 +))) ; => (+ 1 1)
+
+(postfix (1 2 3 +)) ;=> 6
+```
+
+
+---
+## Macro 
+
+A funny example ...
+
+```clojure
+(require '(clojure [string :as str]
+                   [walk :as walk]))
+                   
+(defmacro reverse-it
+  [form]
+  (walk/postwalk #(if (symbol? %)
+                   (symbol (str/reverse (name %)))
+                    %)
+                 form))
+
+(reverse-it
+ (qesod [gra (egnar 3)]
+        (nltnirp "hello "(cni gra)))) 
+        
+;hello 1
+;hello 2
+;hello 3
+;=> nil
+
+```
+
 
 --- .segue .dark
 ## Q & A
