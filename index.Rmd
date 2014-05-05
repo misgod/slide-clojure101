@@ -7,7 +7,7 @@ license     : by-nc-sa
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : solarized_light     # 
-widgets     : []  # {mathjax, quiz, bootstrap}       
+widgets     : [mathjax]  # {mathjax, quiz, bootstrap}       
 mode        : selfcontained # {standalone, draft}
 logo        : icon.png
 ---
@@ -24,6 +24,9 @@ r {
   color: red;
 }
 
+strong {
+  font-weight: bold;
+}
 
 
 </style>
@@ -128,6 +131,29 @@ r {
 
 ---
 ## S-Expressions
+A Clojure form, and parameter can also be a form.
+
+```clojure
+(symbol parameter1 parameter2 ...)
+```
+
+```clojure
+(+ 1 2) ;=> 3
+(* 1 3) ;=> 3
+(- 3 2) ;=> 1 
+(/ 8 2) ;=> 4
+
+(+ 1 2 3) ;=> 6
+
+(+ 1 (+ 2 3) (- 3 2)) ;=> 7
+
+(println "hello!") 
+;hello!
+;=> nil
+
+
+```
+
 
 
 
@@ -186,19 +212,14 @@ r {
 
 * Symbol:  <g> def read zero? +  </g>
 
-* Keyword:  <g> :fred :ethel </g>
+* Keyword:  <g> :mykey :ethel :tainan </g>
 
 * Regex pattern:  <g> #"...pattern..." </g>
 
 ---
-## Some Demo
+## Some Code
 
 ```clojure
-(+ 1 2) ;=> 3
-(* 1 3) ;=> 3
-(- 3 2) ;=> 1 
-(/ 8 2) ;=> 4
-(+ 1 2 3) ;=> 6
 (/ 3 5) ;=> 3/5
 (* 5 (/ 3 5)) ;=> 3N
 
@@ -286,7 +307,7 @@ r {
 ## Some Code (cont.)
 
 ```clojure
-(apply + [1 2 3 4]) ;=> 10
+(apply + [1 2 3 4]) ;=> 10  ;;(+ 1 2 3 4)
 
 (count [0 1 2 3]) ;=> 4
 
@@ -335,7 +356,9 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 ---
 ## Functional Programming vs. Imperative Programming
 
+
 //TODO...
+
 
 ---
 ## First-class functions
@@ -403,19 +426,21 @@ A recursive factorial sample
 
 --- &twocol w1:40% w2:60%
 ## Tail-recursion
+TDOD...
+
+> * JVM does not support tail-call optimization,So still StackOverFlowError by (fact 10000)
 
 *** =left
-
-```
-fact 8
-= f 6 1
-= f 5 6
-= f 4 30
-= f 3 120
-= f 2 360
-= f 1 720
-= f 720
-```
+<pre>
+fact 6
+= f  6  1
+= f  5  6 
+= f  4  30
+= f  3  120
+= f  2  360
+= f  1  720
+= 720
+</pre>
 
 *** =right
 ```clojure
@@ -427,12 +452,11 @@ fact 8
     (f n 1)))    
 
 ```
-### But ... 
-> * JVM does not support tail-call optimization.
-> * So still StackOverFlowError by (fact 10000)
 
 ---
 ## Tail-recursion with **recur**
+
+**recur** is the only non-stack-consuming looping construct in Clojure.
 
 ```clojure
 (defn fact [n]
@@ -447,11 +471,8 @@ fact 8
 
 (fact 10000N) ;=> ...
 ```
-### But 
-> * JVM does not support tail-call optimization.
-> * So **recur** is the only non-stack-consuming looping construct in Clojure.
 
-* more concise way
+* BTW, more concise way
 
 ```clojure
 (defn fact [n]
@@ -484,6 +505,11 @@ fact 8
 
 ---
 ## Map, Reduce and Filter
+TODO...
+<<diagram ...>>
+
+---
+## Map, Reduce and Filter
 
 ```Clojure
 (def data '(1 2 3 4 5))
@@ -506,6 +532,11 @@ fact 8
 
 (reduce + (range)) ;=> non-stop ..
 ```
+
+---
+## Lazy Ev...
+
+TODO
 
 ---
 ## Fibonacci Series Example
@@ -555,14 +586,19 @@ fact 8
 ### Tail recursion version
 ```clojure
 (defn fib3 [n]
-  (let [f (fn [i p acc]
-            (if (zero? i)
-              p
-              (recur (dec i) acc (+' acc p))))]
-    (f n 0 1)))
+  (loop [i n p 0 acc 1]
+    (if (zero? i)
+      p
+      (recur (dec i) acc (+' acc p)))))
 ```
 
-> * complicate....
+```clojure
+(map fib3 (range  10)) ;=> (0 1 1 2 3 5 8 13 21 34)
+
+(count (str (fib3 100000))) ;=> 20899
+
+```
+
 
 ---
 ## Fibonacci Series Example (Cont.)
@@ -580,7 +616,7 @@ fact 8
 ```clojure
 (fib4)  ;=> (0 1 1 2 3 5 8 ...)
 
-(nth (fib4) 100000) ;=> (A very long number...)
+(count (str (nth (fib4) 100000)));=> 20899
 
 ```
 
@@ -602,20 +638,20 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 ---
 ## Clojure in JVM
 
-* Clojure strings are Java Strings.
+* Clojure strings are Java **Strings**.
 
-* Clojure nil is Java’s null.
+* Clojure **nil** is Java’s **null**.
 
 * Clojure numbers are Java numbers.
 
-* Clojure regular expressions are instances of <b>java.util.regex.Pattern</b>.
+* Clojure regular expressions are instances of **java.util.regex.Pattern**.
 
-* Clojure implement the appropriate read-only java.util.\* collection interfaces
-  - Clojure maps implement <b>java.util.Map</b>
-  - Clojure vectors and sequences and lists implement <b>java.util.List</b>
-  - Clojure sets implement <b>java.util.Set</b>
+* Clojure data structures 
+  - Clojure maps implement **java.util.Map**
+  - Clojure vectors and sequences and lists implement **java.util.List**
+  - Clojure sets implement **java.util.Set**
 
-* Clojure functions implement <b>java.lang.Runnable</b> and <b>java.util.concurrent.Callable</b>
+* Clojure functions implement **java.lang.Runnable** and **java.util.concurrent.Callable**
 
 
 ---
@@ -667,21 +703,6 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 (capitalize "abcd") ;=> "dcba"
 
 ```
----
-## doto
-
-```Clojure
-(import javax.swing.JFrame)
-
-(doto (JFrame.)
-  (.setTitle "title")
-  (.setBackground java.awt.Color/white)
-  (.setSize (java.awt.Dimension. 500 500))
-  (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE)
-  (.setVisible true))
-
-```
-
 
 --- &twocol w1:40% w2:60%
 ## Macro
@@ -720,18 +741,17 @@ A simple macro example..
 ## Macro 
 
 A funny example ...
-
 ```clojure
 (require '(clojure [string :as str]
                    [walk :as walk]))
-                   
-(defmacro reverse-it
+(defmacro reverse-it 
   [form]
   (walk/postwalk #(if (symbol? %)
                    (symbol (str/reverse (name %)))
                     %)
                  form))
-
+```
+```clojure
 (reverse-it
  (qesod [gra (egnar 3)]
         (nltnirp "hello "(cni gra)))) 
@@ -743,6 +763,25 @@ A funny example ...
 
 ```
 
+
+---
+## Useful Macro
+
+TODO
+
+doto, -->, ->>
+
+```Clojure
+(import javax.swing.JFrame)
+
+(doto (JFrame.)
+  (.setTitle "title")
+  (.setBackground java.awt.Color/white)
+  (.setSize (java.awt.Dimension. 500 500))
+  (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE)
+  (.setVisible true))
+
+```
 
 --- .segue .dark
 ## Q & A
