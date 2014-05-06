@@ -182,6 +182,10 @@ A Clojure form, and parameter can also be a form.
 
 (str "hello" "-" "world" "!") ;=> hello-world!
 
+(def x 100)
+(+ x 1) ;=> 101
+x ;=> 100
+
 (identical? "aa" (str "a" "a")) ;=> false
 (nil? nil) ;=> true 
 

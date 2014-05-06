@@ -355,6 +355,10 @@ strong {
 
 (str &quot;hello&quot; &quot;-&quot; &quot;world&quot; &quot;!&quot;) ;=&gt; hello-world!
 
+(def x 100)
+(+ x 1) ;=&gt; 101
+x ;=&gt; 100
+
 (identical? &quot;aa&quot; (str &quot;a&quot; &quot;a&quot;)) ;=&gt; false
 (nil? nil) ;=&gt; true 
 
