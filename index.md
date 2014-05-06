@@ -7,7 +7,7 @@ license     : by-nc-sa
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : solarized_light     # 
-widgets     : []  # {mathjax, quiz, bootstrap}       
+widgets     : [mathjax]  # {mathjax, quiz, bootstrap}       
 mode        : selfcontained # {standalone, draft}
 logo        : icon.png
 ---
@@ -24,6 +24,9 @@ r {
   color: red;
 }
 
+strong {
+  font-weight: bold;
+}
 
 
 </style>
@@ -38,7 +41,9 @@ r {
 
 * Functional Programming in Clojure
 
-* Code Example
+* Java Interop
+
+* Marco
 
 * Q & A
 
@@ -77,19 +82,22 @@ r {
 ## Clojure Status
 
 * started in 2007
+
 * Original author: Rich Hickey
+
 * Latest Stable Release: 1.6.0 (April, 2014)
+
+* Open Source under Eclipse Public License
 
 ---
 ## What is Clojure?
 
-> * Lisp dialect (Code as data)
-> * Dynamic 
-> * Functional (immutability)
-> * General-purpose 
-> * Compiled
-> * Hosted on JVM, also CLR and JavaScript
-> * Open Source under Eclipse Public License
+* Lisp dialect (Code as data)
+* Dynamic 
+* Functional (immutability)
+* General-purpose 
+* Compiled
+* Hosted on JVM, also CLR and JavaScript
 
 ---
 ## Why use Clojure
@@ -119,43 +127,28 @@ r {
 ## Clojure Fundamentals
 
 ---
-## Hello World
+## S-Expressions
+A Clojure form, and parameter can also be a form.
 
-```clojure 
-(defn hello
-  "Say hello world!"
-  [] (println "Hello World!"))
-
+```clojure
+(symbol parameter1 parameter2 ...)
 ```
 
 ```clojure
-(hello)
-;Hello World!
-;=> nil
-```
+(+ 1 2) ;=> 3
+(* 1 3) ;=> 3
+(- 3 2) ;=> 1 
+(/ 8 2) ;=> 4
 
----
-## Hello World with parameter
+(+ 1 2 3) ;=> 6
 
-```clojure
-(defn hello
-  "Say hello to someone!"
-  ([] (println "Hello World"))
-  ([someone] (println "Hello" someone)))
+(+ 1 (+ 2 3) (- 3 2)) ;=> 7
 
-```
-
-```clojure
-(hello)
-;Hello World!
-;=> nil
-
-(hello "Sam")
-;Hello Sam
+(println "hello!") 
+;hello!
 ;=> nil
 
 ```
-
 
 ---
 ## Actomic Data Types
@@ -172,19 +165,14 @@ r {
 
 * Symbol:  <g> def read zero? +  </g>
 
-* Keyword:  <g> :fred :ethel </g>
+* Keyword:  <g> :mykey :ethel :tainan </g>
 
 * Regex pattern:  <g> #"...pattern..." </g>
 
 ---
-## Some Demo
+## Some Code
 
 ```clojure
-(+ 1 2) ;=> 3
-(* 1 3) ;=> 3
-(- 3 2) ;=> 1 
-(/ 8 2) ;=> 4
-(+ 1 2 3) ;=> 6
 (/ 3 5) ;=> 3/5
 (* 5 (/ 3 5)) ;=> 3N
 
@@ -240,7 +228,6 @@ r {
 (seq? '(1 2 3)) ;=> true
 (seq? #{1 2 3}) ;=> false
 (seq? {1 2 3 4}) ;=> false
-
 ```
 
 ---
@@ -265,14 +252,13 @@ r {
 (rest '(1 2 3))  ;=> (2 3)
 (rest ()) ;=> ()
 (empty? ()) ;=> true
-
 ```
 
 ---
 ## Some Code (cont.)
 
 ```clojure
-(apply + [1 2 3 4]) ;=> 10
+(apply + [1 2 3 4]) ;=> 10  ;;(+ 1 2 3 4)
 
 (count [0 1 2 3]) ;=> 4
 
@@ -289,8 +275,71 @@ r {
 (dissoc mymap :s :h :a) ;=> {:g "Google"}
 
 mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
+```
+
+---
+## Functions
+
+```clojure
+;; Anonymous
+(fn [x y] (* x y))
+(fn [& xs] (coll? xs))
+(fn sum [x] (+ x (sum dec (x))))
+(sum 10) ;;=> Unable to resolve symbol: sum ...
+
+;;In-place function
+#(str %1 %2 %3) ;; arguments => %1 %2 ... %n
+```
+
+```clojure
+(def square (fn [x] (* x x)))
+(def square #(* % %))
+(square 10) ;=> 100
+```
+
+```clojure
+;; defn => def + fn
+(defn sum 
+    [a b c & others] 
+    (+ a b c (apply + others)))
+(sum 1 2 3 4 5 6 7) ;=> 28
+```
+
+---
+## Hello World function
+
+```clojure 
+(defn hello
+  "Say hello world!"
+  [] (println "Hello World!"))
 
 ```
+```clojure
+(hello)
+;Hello World!
+;=> nil
+```
+
+---
+## Hello World function with parameter
+
+```clojure
+(defn hello
+  "Say hello to someone!"
+  ([] (println "Hello World"))
+  ([someone] (println "Hello" someone)))
+
+```
+```clojure
+(hello)
+;Hello World!
+;=> nil
+
+(hello "Sam")
+;Hello Sam
+;=> nil
+```
+
 
 --- .segue .dark
 ## Functional programming in Clojure
@@ -318,10 +367,23 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 
 * Lazy evaluation
 
+---
+## First-class & Higher-order function
+
+### First-class means the language supports 
+
+1. passing functions as arguments
+2. returning functions as the values
+3. assigning them to variables or storing them in data structures
+
+
+### Higher-Order Functions is a function that does at least one of the following:
+
+1. takes one or more functions as an input
+2. outputs a function
 
 ---
-## First-class functions
-
+## First-class & Higher-order function (Cont.)
 ### Passing functions as arguments
 ```clojure 
 (def square (fn [x] (* x x))) ;=> #'user/square
@@ -337,8 +399,7 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 ```
 
 ---
-## First-class functions (Cont.)
-
+## First-class & Higher-order function (Cont.)
 
 ### Returning function as value
 ```clojure 
@@ -355,6 +416,30 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 (base2 10) ;=> 1024
 
 (base5 2) ;=> 25
+```
+
+---
+## Closure
+#### Any first class function with **free variables** is a closure.
+
+```clojure 
+(defn time-n [n]
+  (fn [y] (* n y)))
+
+(def time3 (time-n 3))
+
+(time3 10) ;=> 30
+```
+
+```clojure
+(defn grant [uid gid]
+  (let [u uid g gid]
+    (fn [method] (check u g method))))
+
+(def check-permission (grant 0 1))
+
+(check-permission "api/delete")
+
 ```
 
 --- &twocol w1:40% w2:60%
@@ -383,42 +468,63 @@ A recursive factorial sample
 (factorial 10000N) ;=> StackOverFlowError
 ```
 
----
+--- &twocol w1:40% w2:60%
 ## Tail-recursion
+> * JVM does not support tail-call optimization,so StackOverFlowError still exists.
+
+*** =left
+![](assets/img/tail.png)
+
+*** =right
+```clojure
+(defn fact [n]
+  (letfn [(f [i a]
+            (if (<= i 1)
+              a
+              (f (dec i) (* i a))))]
+    (f n 1)))    
+
+```
+
+---
+## Tail-recursion with **recur**
+
+**recur** is the only non-stack-consuming looping construct in Clojure.
 
 ```clojure
-(def factorial2
-  (fn [n]
-    (loop [i n acc 1]
-       (if (zero? i)
-            acc
-            (recur (dec i) (* acc i))))))
+(defn fact [n]
+  (loop [i n a 1]
+    (if (<= i 1) 
+      a 
+      (recur (dec i) (* i a)))))
 ```
 
 ```clojure 
-(factorial 6) ;=> 720
+(fact 6) ;=> 720
 
-(factorial 10000N) ;=> ...
+(fact 10000N) ;=> ...
 ```
 
-### But ... 
+BTW... more concise way
 
-> * JVM does not support tail-call optimization.
-> * So **recur** is the only non-stack-consuming looping construct in Clojure.
+```clojure
+(defn fact [n]
+  (apply * (range 1 (inc n))))
+
+```
 
 ---
-## Comp and Partial
+## Partial functions & Compose functions
 
-### Partial functions
 ```clojure
 (def add5 (partial + 5)) ;=> #'user/add5
 
 (add5 5) ;=> 10
-
+ 
 ((partial + 5) 5) ;=> 10
 ```
+BTW ... **Curry** is a chain of partial functions each with a single argument
 
-### Compose functions
 ```clojure
 (def not-zero? (comp not zero?)) 
 
@@ -427,6 +533,19 @@ A recursive factorial sample
 
 ((comp second reverse) '("a" 2 3 "b")) ;=> 3
 ```
+
+--- &twocol w1:40% w2:60%
+## Map, Reduce and Filter
+*** =left
+### Map
+![](assets/img/map.png)
+
+### Filter
+![](assets/img/filter.png)
+
+*** =right
+### Reduce
+![] (assets/img/reduce.png)
 
 ---
 ## Map, Reduce and Filter
@@ -454,14 +573,35 @@ A recursive factorial sample
 ```
 
 ---
+## Lazy evaluation
+
+* Sequences can be lazy...
+
+```clojure
+(cycle [1 2 3]) ;=> (1 2 3 1 2 3 ...)
+(repeat "a") ;=> ("a" "a" "a" ...)
+(range) ;=> (0 1 2 3 4 ...)
+(class (range)) ;=> clojure.lang.LazySeq
+
+(take 5 (repeat 1)) ;=> (1 1 1 1 1)
+
+```
+```clojure
+(defn n-repeat [n] 
+  (lazy-cat 
+    (repeat n n) (n-repeat (inc n))))
+
+(n-repeat 1) ;=> (1 2 2 3 3 3 4 4 4 4 5 5 5 5 5 ...)
+
+```
+
+---
 ## Fibonacci Series Example
 
 ### Simple recursive version
 
 ```clojure
-(defn fib1
-  "simple version"
-  [n]
+(defn fib1 [n]
   (if (< n 2)
     n
     (+ (fib1 (- n 2)) (fib1 (- n 1)))))
@@ -482,9 +622,7 @@ A recursive factorial sample
 ### Memoized recursive version
 
 ```clojure
-(defn fib2
-  "memo version"
-  [n]
+(defn fib2 [n]
   (if (< n 2)
     n
     (+' (mfib (- n 2)) (mfib (- n 1)))))
@@ -504,35 +642,35 @@ A recursive factorial sample
 
 ### Tail recursion version
 ```clojure
-(defn fib3
-  "Tail Recursion"
-  [n]
-  (let [f (fn [i p acc]
-            (if (zero? i)
-              p
-              (recur (dec i) acc (+' acc p))))]
-    (f n 0 1)))
+(defn fib3 [n]
+  (loop [i n p 0 acc 1]
+    (if (zero? i)
+      p
+      (recur (dec i) acc (+' acc p)))))
 ```
 
-> * complicate....
+```clojure
+(map fib3 (range  10)) ;=> (0 1 1 2 3 5 8 13 21 34)
+
+(count (str (fib3 100000))) ;=> 20899
+
+```
 
 ---
 ## Fibonacci Series Example (Cont.)
 
-
 ### Lazy version -1
 ```clojure
-(defn fib4 []
-  (letfn [(f [p c]
-            (cons c (lazy-seq (f c (+' p c)))))]
-    (f 0 1)))
-
+(def fib4
+  ((fn f [p c]
+     (cons p (lazy-seq (f c (+' p c)))))
+   0 1))
 ```
 
 ```clojure
-(fib4)  ;=> (0 1 1 2 3 5 8 ...)
+fib4  ;=> (0 1 1 2 3 5 8 ...)
 
-(nth (fib4) 100000) ;=> (A very long number...)
+(count (str (nth fib4 100000))) ;=> 20899
 
 ```
 
@@ -551,8 +689,204 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 (take 10 fib5) ;=> (0 1 1 2 3 5 8 13 21 34)
 ```
 
---- .segue  .dark
-## Live Demo
+---
+## Clojure in JVM
+
+* Clojure strings are Java **Strings**.
+
+* Clojure **nil** is Java’s **null**.
+
+* Clojure numbers are Java numbers.
+
+* Clojure regular expressions are instances of **java.util.regex.Pattern**.
+
+* Clojure data structures 
+  - Clojure maps implement **java.util.Map**
+  - Clojure vectors and sequences and lists implement **java.util.List**
+  - Clojure sets implement **java.util.Set**
+
+* Clojure functions implement **java.lang.Runnable** and **java.util.concurrent.Callable**
+
+
+---
+## Java Interop
+
+```Clojure
+(.toUpperCase "abc") ;=> ABC
+
+;; static method
+(Integer/parseInt "10") ;=> 10
+
+;; new Object
+(java.io.File. "~/test.txt") ;=> #<File ~/test.txt>
+
+(instance? String "foo")  ;=> true
+```
+
+```Clojure
+(import java.util.ArrayList)
+(def foo (ArrayList. [1 2 3 4]))
+
+(reduce + foo) ;=> 10
+
+(seq foo) ;=> (1 2 3 4)
+
+(.containsAll foo [2 3 4]) ;=> 4
+
+
+```
+
+---
+## Java Interop (Cont.) 
+
+```Clojure
+;;; Modify object's field
+(def pt (java.awt.Point. 5 10))  ;=> #'user/pt
+
+(.x pt)  ;=> 5
+(set! (.x pt) 10) ;=> 10
+(.x pt) ;=> 10
+```
+
+```Clojure
+;;; Type hints
+(defn #^String reverse
+  [#^String s]
+  (clojure.string/reverse s)) 
+
+(reverse "abcd") ;=> "dcba"
+
+```
+
+--- &twocol w1:40% w2:60%
+## Macro
+
+*** =left
+![](http://images.cnitblog.com/blog/17329/201303/18183535-cb7fa8bff7f04c45ac1ec277ca779025.png)
+
+
+*** =right
+
+* Lisp is a **programmable** programming languages.
+
+* **Homoiconicity**
+  - Code written in the language is encoded as data structures.
+  
+* Extends your code in **compile time**.
+
+---
+## Macro 
+
+A simple macro example..
+
+```clojure
+(defmacro postfix
+  [expr]
+  (conj (butlast expr) (last expr)))
+
+(macroexpand-1 '(postfix (1 1 +))) ; => (+ 1 1)
+
+(postfix (1 2 3 +)) ;=> 6
+```
+
+---
+## Macro 
+
+A funny example ...
+```clojure
+(require '(clojure [string :as str]
+                   [walk :as walk]))
+(defmacro reverse-it 
+  [form]
+  (walk/postwalk #(if (symbol? %)
+                   (symbol (str/reverse (name %)))
+                    %)
+                 form))
+```
+```clojure
+(reverse-it
+ (qesod [gra (egnar 3)]
+        (nltnirp "hello "(cni gra)))) 
+        
+;hello 1
+;hello 2
+;hello 3
+;=> nil
+
+```
+
+
+---
+## Useful Built-in Macro
+#### (-> x form & more)
+
+```Clojure
+(def c 5)
+;; infix: ((c + 3) / 2 - 1)
+(- (/ (+ c 3) 2) 1) ;=> 3
+
+(-> c (+ 3) (/ 2) (- 1)) ;=> 3
+```
+```clojure
+(first (.split (.replace (.toUpperCase "a b c d")
+                         "A"
+                         "X")
+               " ")) ;=> X
+
+(-> "a b c d"
+    (.toUpperCase)
+    (.replace "A" "X")
+    (.split " ")
+    (first)) ;=> X
+```
+
+---
+## Useful Built-in Macro (cont.)
+
+#### (->> x form & more)
+
+```Clojure
+(def c 5)
+(->> c (+ 3) (/ 2) (- 1)) ;=> 3/4
+;; (-1 (/ 2 (+3 c)))
+```
+```clojure
+(reduce +
+        (take 10
+              (filter even?
+                      (map #(* % %)
+                           (range)))))  ;=> 1140
+                           
+(->> (range)
+     (map #(* % %))
+     (filter even?)
+     (take 10)
+     (reduce +)) ;=> 1140                          
+```
+
+---
+## Useful Built-in Macro (cont.)
+
+#### (doto x & forms)
+
+```Clojure
+(import javax.swing.JFrame)
+
+(doto (JFrame.)
+  (.setTitle "title")
+  (.setBackground java.awt.Color/white)
+  (.setSize (java.awt.Dimension. 500 500))
+  (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE)
+  (.setVisible true))
+```
+
+```clojure
+(doto (java.util.HashMap.)
+  (.put "a" 1)
+  (.put "b" 2)
+  (.put "c" 3)) ;=> #<HashMap {b=2, a=1, c=3}>   
+
+```
 
 --- .segue .dark
 ## Q & A

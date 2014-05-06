@@ -64,6 +64,9 @@ r {
   color: red;
 }
 
+strong {
+  font-weight: bold;
+}
 
 
 </style>
@@ -74,7 +77,8 @@ r {
 <li><p>Overview</p></li>
 <li><p>Clojure Fundamentals</p></li>
 <li><p>Functional Programming in Clojure</p></li>
-<li><p>Code Example</p></li>
+<li><p>Java Interop</p></li>
+<li><p>Marco</p></li>
 <li><p>Q &amp; A</p></li>
 </ul>
 
@@ -215,9 +219,10 @@ r {
   </hgroup>
   <article data-timings="">
     <ul>
-<li>started in 2007</li>
-<li>Original author: Rich Hickey</li>
-<li>Latest Stable Release: 1.6.0 (April, 2014)</li>
+<li><p>started in 2007</p></li>
+<li><p>Original author: Rich Hickey</p></li>
+<li><p>Latest Stable Release: 1.6.0 (April, 2014)</p></li>
+<li><p>Open Source under Eclipse Public License</p></li>
 </ul>
 
   </article>
@@ -229,14 +234,13 @@ r {
     <h2>What is Clojure?</h2>
   </hgroup>
   <article data-timings="">
-    <ul class = "build incremental">
+    <ul>
 <li>Lisp dialect (Code as data)</li>
 <li>Dynamic </li>
 <li>Functional (immutability)</li>
 <li>General-purpose </li>
 <li>Compiled</li>
 <li>Hosted on JVM, also CLR and JavaScript</li>
-<li>Open Source under Eclipse Public License</li>
 </ul>
 
   </article>
@@ -290,42 +294,25 @@ r {
 
 <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Hello World</h2>
+    <h2>S-Expressions</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="clojure">(defn hello
-  &quot;Say hello world!&quot;
-  [] (println &quot;Hello World!&quot;))
+    <p>A Clojure form, and parameter can also be a form.</p>
 
+<pre><code class="clojure">(symbol parameter1 parameter2 ...)
 </code></pre>
 
-<pre><code class="clojure">(hello)
-;Hello World!
-;=&gt; nil
-</code></pre>
+<pre><code class="clojure">(+ 1 2) ;=&gt; 3
+(* 1 3) ;=&gt; 3
+(- 3 2) ;=&gt; 1 
+(/ 8 2) ;=&gt; 4
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+(+ 1 2 3) ;=&gt; 6
 
-<slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>Hello World with parameter</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="clojure">(defn hello
-  &quot;Say hello to someone!&quot;
-  ([] (println &quot;Hello World&quot;))
-  ([someone] (println &quot;Hello&quot; someone)))
+(+ 1 (+ 2 3) (- 3 2)) ;=&gt; 7
 
-</code></pre>
-
-<pre><code class="clojure">(hello)
-;Hello World!
-;=&gt; nil
-
-(hello &quot;Sam&quot;)
-;Hello Sam
+(println &quot;hello!&quot;) 
+;hello!
 ;=&gt; nil
 
 </code></pre>
@@ -334,7 +321,7 @@ r {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Actomic Data Types</h2>
   </hgroup>
@@ -346,7 +333,7 @@ r {
 <li><p>Character:  <g> \c \b \a \space \newline \tab </g></p></li>
 <li><p>Null:  <g> nil </g></p></li>
 <li><p>Symbol:  <g> def read zero? +  </g></p></li>
-<li><p>Keyword:  <g> :fred :ethel </g></p></li>
+<li><p>Keyword:  <g> :mykey :ethel :tainan </g></p></li>
 <li><p>Regex pattern:  <g> #&quot;...pattern...&quot; </g></p></li>
 </ul>
 
@@ -354,17 +341,12 @@ r {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
-    <h2>Some Demo</h2>
+    <h2>Some Code</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="clojure">(+ 1 2) ;=&gt; 3
-(* 1 3) ;=&gt; 3
-(- 3 2) ;=&gt; 1 
-(/ 8 2) ;=&gt; 4
-(+ 1 2 3) ;=&gt; 6
-(/ 3 5) ;=&gt; 3/5
+    <pre><code class="clojure">(/ 3 5) ;=&gt; 3/5
 (* 5 (/ 3 5)) ;=&gt; 3N
 
 (not true) ;=&gt; false
@@ -384,7 +366,7 @@ r {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-14" style="background:#CCC;">
+<slide class="" id="slide-13" style="background:#CCC;">
   <hgroup>
     <h3>Alan J. Perlis (Epigrams on Programming)</h3>
   </hgroup>
@@ -395,7 +377,7 @@ r {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Clojure Data Structures</h2>
   </hgroup>
@@ -411,7 +393,7 @@ r {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Some Code</h2>
   </hgroup>
@@ -435,14 +417,13 @@ r {
 (seq? &#39;(1 2 3)) ;=&gt; true
 (seq? #{1 2 3}) ;=&gt; false
 (seq? {1 2 3 4}) ;=&gt; false
-
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-17" style="background:;">
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Some Code (cont.)</h2>
   </hgroup>
@@ -465,19 +446,18 @@ r {
 (rest &#39;(1 2 3))  ;=&gt; (2 3)
 (rest ()) ;=&gt; ()
 (empty? ()) ;=&gt; true
-
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-18" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Some Code (cont.)</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="clojure">(apply + [1 2 3 4]) ;=&gt; 10
+    <pre><code class="clojure">(apply + [1 2 3 4]) ;=&gt; 10  ;;(+ 1 2 3 4)
 
 (count [0 1 2 3]) ;=&gt; 4
 
@@ -494,14 +474,89 @@ r {
 (dissoc mymap :s :h :a) ;=&gt; {:g &quot;Google&quot;}
 
 mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &quot;Samsung&quot;}  ;; immutable
-
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-19" style="background:;">
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Functions</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">;; Anonymous
+(fn [x y] (* x y))
+(fn [&amp; xs] (coll? xs))
+(fn sum [x] (+ x (sum dec (x))))
+(sum 10) ;;=&gt; Unable to resolve symbol: sum ...
+
+;;In-place function
+#(str %1 %2 %3) ;; arguments =&gt; %1 %2 ... %n
+</code></pre>
+
+<pre><code class="clojure">(def square (fn [x] (* x x)))
+(def square #(* % %))
+(square 10) ;=&gt; 100
+</code></pre>
+
+<pre><code class="clojure">;; defn =&gt; def + fn
+(defn sum 
+    [a b c &amp; others] 
+    (+ a b c (apply + others)))
+(sum 1 2 3 4 5 6 7) ;=&gt; 28
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Hello World function</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(defn hello
+  &quot;Say hello world!&quot;
+  [] (println &quot;Hello World!&quot;))
+
+</code></pre>
+
+<pre><code class="clojure">(hello)
+;Hello World!
+;=&gt; nil
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Hello World function with parameter</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="clojure">(defn hello
+  &quot;Say hello to someone!&quot;
+  ([] (println &quot;Hello World&quot;))
+  ([someone] (println &quot;Hello&quot; someone)))
+
+</code></pre>
+
+<pre><code class="clojure">(hello)
+;Hello World!
+;=&gt; nil
+
+(hello &quot;Sam&quot;)
+;Hello Sam
+;=&gt; nil
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-21" style="background:;">
   <hgroup>
     <h2>Functional programming in Clojure</h2>
   </hgroup>
@@ -511,7 +566,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>What is Functional programming</h2>
   </hgroup>
@@ -523,7 +578,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-23" style="background:;">
   <hgroup>
     <h2>Functional Progamming Features</h2>
   </hgroup>
@@ -542,9 +597,33 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
-    <h2>First-class functions</h2>
+    <h2>First-class &amp; Higher-order function</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>First-class means the language supports</h3>
+
+<ol>
+<li>passing functions as arguments</li>
+<li>returning functions as the values</li>
+<li>assigning them to variables or storing them in data structures</li>
+</ol>
+
+<h3>Higher-Order Functions is a function that does at least one of the following:</h3>
+
+<ol>
+<li>takes one or more functions as an input</li>
+<li>outputs a function</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>First-class &amp; Higher-order function (Cont.)</h2>
   </hgroup>
   <article data-timings="">
     <h3>Passing functions as arguments</h3>
@@ -565,9 +644,9 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-23" style="background:;">
+<slide class="" id="slide-26" style="background:;">
   <hgroup>
-    <h2>First-class functions (Cont.)</h2>
+    <h2>First-class &amp; Higher-order function (Cont.)</h2>
   </hgroup>
   <article data-timings="">
     <h3>Returning function as value</h3>
@@ -591,7 +670,36 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-24" style="background:;">
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Closure</h2>
+  </hgroup>
+  <article data-timings="">
+    <h4>Any first class function with <strong>free variables</strong> is a closure.</h4>
+
+<pre><code class="clojure">(defn time-n [n]
+  (fn [y] (* n y)))
+
+(def time3 (time-n 3))
+
+(time3 10) ;=&gt; 30
+</code></pre>
+
+<pre><code class="clojure">(defn grant [uid gid]
+  (let [u uid g gid]
+    (fn [method] (check u g method))))
+
+(def check-permission (grant 0 1))
+
+(check-permission &quot;api/delete&quot;)
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Recursion</h2>
   </hgroup>
@@ -619,50 +727,77 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-25" style="background:;">
+<slide class="" id="slide-29" style="background:;">
   <hgroup>
     <h2>Tail-recursion</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="clojure">(def factorial2
-  (fn [n]
-    (loop [i n acc 1]
-       (if (zero? i)
-            acc
-            (recur (dec i) (* acc i))))))
-</code></pre>
-
-<pre><code class="clojure">(factorial 6) ;=&gt; 720
-
-(factorial 10000N) ;=&gt; ...
-</code></pre>
-
-<h3>But ...</h3>
-
-<ul class = "build incremental">
-<li>JVM does not support tail-call optimization.</li>
-<li>So <strong>recur</strong> is the only non-stack-consuming looping construct in Clojure.</li>
+    <ul class = "build incremental">
+<li>JVM does not support tail-call optimization,so StackOverFlowError still exists.</li>
 </ul>
+
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="assets/img/tail.png" alt=""></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <pre><code class="clojure">(defn fact [n]
+  (letfn [(f [i a]
+            (if (&lt;= i 1)
+              a
+              (f (dec i) (* i a))))]
+    (f n 1)))    
+
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Tail-recursion with <strong>recur</strong></h2>
+  </hgroup>
+  <article data-timings="">
+    <p><strong>recur</strong> is the only non-stack-consuming looping construct in Clojure.</p>
+
+<pre><code class="clojure">(defn fact [n]
+  (loop [i n a 1]
+    (if (&lt;= i 1) 
+      a 
+      (recur (dec i) (* i a)))))
+</code></pre>
+
+<pre><code class="clojure">(fact 6) ;=&gt; 720
+
+(fact 10000N) ;=&gt; ...
+</code></pre>
+
+<p>BTW... more concise way</p>
+
+<pre><code class="clojure">(defn fact [n]
+  (apply * (range 1 (inc n))))
+
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-26" style="background:;">
+<slide class="" id="slide-31" style="background:;">
   <hgroup>
-    <h2>Comp and Partial</h2>
+    <h2>Partial functions &amp; Compose functions</h2>
   </hgroup>
   <article data-timings="">
-    <h3>Partial functions</h3>
-
-<pre><code class="clojure">(def add5 (partial + 5)) ;=&gt; #&#39;user/add5
+    <pre><code class="clojure">(def add5 (partial + 5)) ;=&gt; #&#39;user/add5
 
 (add5 5) ;=&gt; 10
 
 ((partial + 5) 5) ;=&gt; 10
 </code></pre>
 
-<h3>Compose functions</h3>
+<p>BTW ... <strong>Curry</strong> is a chain of partial functions each with a single argument</p>
 
 <pre><code class="clojure">(def not-zero? (comp not zero?)) 
 
@@ -676,7 +811,33 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-27" style="background:;">
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Map, Reduce and Filter</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <h3>Map</h3>
+
+<p><img src="assets/img/map.png" alt=""></p>
+
+<h3>Filter</h3>
+
+<p><img src="assets/img/filter.png" alt=""></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>Reduce</h3>
+
+<p><img src="assets/img/reduce.png" alt=""></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
   <hgroup>
     <h2>Map, Reduce and Filter</h2>
   </hgroup>
@@ -706,16 +867,44 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-28" style="background:;">
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>Lazy evaluation</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Sequences can be lazy...</li>
+</ul>
+
+<pre><code class="clojure">(cycle [1 2 3]) ;=&gt; (1 2 3 1 2 3 ...)
+(repeat &quot;a&quot;) ;=&gt; (&quot;a&quot; &quot;a&quot; &quot;a&quot; ...)
+(range) ;=&gt; (0 1 2 3 4 ...)
+(class (range)) ;=&gt; clojure.lang.LazySeq
+
+(take 5 (repeat 1)) ;=&gt; (1 1 1 1 1)
+
+</code></pre>
+
+<pre><code class="clojure">(defn n-repeat [n] 
+  (lazy-cat 
+    (repeat n n) (n-repeat (inc n))))
+
+(n-repeat 1) ;=&gt; (1 2 2 3 3 3 4 4 4 4 5 5 5 5 5 ...)
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example</h2>
   </hgroup>
   <article data-timings="">
     <h3>Simple recursive version</h3>
 
-<pre><code class="clojure">(defn fib1
-  &quot;simple version&quot;
-  [n]
+<pre><code class="clojure">(defn fib1 [n]
   (if (&lt; n 2)
     n
     (+ (fib1 (- n 2)) (fib1 (- n 1)))))
@@ -736,16 +925,14 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-29" style="background:;">
+<slide class="" id="slide-36" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
   <article data-timings="">
     <h3>Memoized recursive version</h3>
 
-<pre><code class="clojure">(defn fib2
-  &quot;memo version&quot;
-  [n]
+<pre><code class="clojure">(defn fib2 [n]
   (if (&lt; n 2)
     n
     (+&#39; (mfib (- n 2)) (mfib (- n 1)))))
@@ -766,48 +953,46 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-30" style="background:;">
+<slide class="" id="slide-37" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
   <article data-timings="">
     <h3>Tail recursion version</h3>
 
-<pre><code class="clojure">(defn fib3
-  &quot;Tail Recursion&quot;
-  [n]
-  (let [f (fn [i p acc]
-            (if (zero? i)
-              p
-              (recur (dec i) acc (+&#39; acc p))))]
-    (f n 0 1)))
+<pre><code class="clojure">(defn fib3 [n]
+  (loop [i n p 0 acc 1]
+    (if (zero? i)
+      p
+      (recur (dec i) acc (+&#39; acc p)))))
 </code></pre>
 
-<ul class = "build incremental">
-<li>complicate....</li>
-</ul>
+<pre><code class="clojure">(map fib3 (range  10)) ;=&gt; (0 1 1 2 3 5 8 13 21 34)
+
+(count (str (fib3 100000))) ;=&gt; 20899
+
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-31" style="background:;">
+<slide class="" id="slide-38" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
   <article data-timings="">
     <h3>Lazy version -1</h3>
 
-<pre><code class="clojure">(defn fib4 []
-  (letfn [(f [p c]
-            (cons c (lazy-seq (f c (+&#39; p c)))))]
-    (f 0 1)))
-
+<pre><code class="clojure">(def fib4
+  ((fn f [p c]
+     (cons p (lazy-seq (f c (+&#39; p c)))))
+   0 1))
 </code></pre>
 
-<pre><code class="clojure">(fib4)  ;=&gt; (0 1 1 2 3 5 8 ...)
+<pre><code class="clojure">fib4  ;=&gt; (0 1 1 2 3 5 8 ...)
 
-(nth (fib4) 100000) ;=&gt; (A very long number...)
+(count (str (nth fib4 100000))) ;=&gt; 20899
 
 </code></pre>
 
@@ -815,7 +1000,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-32" style="background:;">
+<slide class="" id="slide-39" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
@@ -834,17 +1019,254 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-33" style="background:;">
+<slide class="" id="slide-40" style="background:;">
   <hgroup>
-    <h2>Live Demo</h2>
+    <h2>Clojure in JVM</h2>
   </hgroup>
   <article data-timings="">
-    
+    <ul>
+<li><p>Clojure strings are Java <strong>Strings</strong>.</p></li>
+<li><p>Clojure <strong>nil</strong> is Java’s <strong>null</strong>.</p></li>
+<li><p>Clojure numbers are Java numbers.</p></li>
+<li><p>Clojure regular expressions are instances of <strong>java.util.regex.Pattern</strong>.</p></li>
+<li><p>Clojure data structures </p>
+
+<ul>
+<li>Clojure maps implement <strong>java.util.Map</strong></li>
+<li>Clojure vectors and sequences and lists implement <strong>java.util.List</strong></li>
+<li>Clojure sets implement <strong>java.util.Set</strong></li>
+</ul></li>
+<li><p>Clojure functions implement <strong>java.lang.Runnable</strong> and <strong>java.util.concurrent.Callable</strong></p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-34" style="background:;">
+<slide class="" id="slide-41" style="background:;">
+  <hgroup>
+    <h2>Java Interop</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="Clojure">(.toUpperCase &quot;abc&quot;) ;=&gt; ABC
+
+;; static method
+(Integer/parseInt &quot;10&quot;) ;=&gt; 10
+
+;; new Object
+(java.io.File. &quot;~/test.txt&quot;) ;=&gt; #&lt;File ~/test.txt&gt;
+
+(instance? String &quot;foo&quot;)  ;=&gt; true
+</code></pre>
+
+<pre><code class="Clojure">(import java.util.ArrayList)
+(def foo (ArrayList. [1 2 3 4]))
+
+(reduce + foo) ;=&gt; 10
+
+(seq foo) ;=&gt; (1 2 3 4)
+
+(.containsAll foo [2 3 4]) ;=&gt; 4
+
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-42" style="background:;">
+  <hgroup>
+    <h2>Java Interop (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="Clojure">;;; Modify object&#39;s field
+(def pt (java.awt.Point. 5 10))  ;=&gt; #&#39;user/pt
+
+(.x pt)  ;=&gt; 5
+(set! (.x pt) 10) ;=&gt; 10
+(.x pt) ;=&gt; 10
+</code></pre>
+
+<pre><code class="Clojure">;;; Type hints
+(defn #^String reverse
+  [#^String s]
+  (clojure.string/reverse s)) 
+
+(reverse &quot;abcd&quot;) ;=&gt; &quot;dcba&quot;
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-43" style="background:;">
+  <hgroup>
+    <h2>Macro</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="http://images.cnitblog.com/blog/17329/201303/18183535-cb7fa8bff7f04c45ac1ec277ca779025.png" alt=""></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <ul>
+<li><p>Lisp is a <strong>programmable</strong> programming languages.</p></li>
+<li><p><strong>Homoiconicity</strong></p>
+
+<ul>
+<li>Code written in the language is encoded as data structures.</li>
+</ul></li>
+<li><p>Extends your code in <strong>compile time</strong>.</p></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-44" style="background:;">
+  <hgroup>
+    <h2>Macro</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A simple macro example..</p>
+
+<pre><code class="clojure">(defmacro postfix
+  [expr]
+  (conj (butlast expr) (last expr)))
+
+(macroexpand-1 &#39;(postfix (1 1 +))) ; =&gt; (+ 1 1)
+
+(postfix (1 2 3 +)) ;=&gt; 6
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-45" style="background:;">
+  <hgroup>
+    <h2>Macro</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A funny example ...</p>
+
+<pre><code class="clojure">(require &#39;(clojure [string :as str]
+                   [walk :as walk]))
+(defmacro reverse-it 
+  [form]
+  (walk/postwalk #(if (symbol? %)
+                   (symbol (str/reverse (name %)))
+                    %)
+                 form))
+</code></pre>
+
+<pre><code class="clojure">(reverse-it
+ (qesod [gra (egnar 3)]
+        (nltnirp &quot;hello &quot;(cni gra)))) 
+
+;hello 1
+;hello 2
+;hello 3
+;=&gt; nil
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-46" style="background:;">
+  <hgroup>
+    <h2>Useful Built-in Macro</h2>
+  </hgroup>
+  <article data-timings="">
+    <h4>(-&gt; x form &amp; more)</h4>
+
+<pre><code class="Clojure">(def c 5)
+;; infix: ((c + 3) / 2 - 1)
+(- (/ (+ c 3) 2) 1) ;=&gt; 3
+
+(-&gt; c (+ 3) (/ 2) (- 1)) ;=&gt; 3
+</code></pre>
+
+<pre><code class="clojure">(first (.split (.replace (.toUpperCase &quot;a b c d&quot;)
+                         &quot;A&quot;
+                         &quot;X&quot;)
+               &quot; &quot;)) ;=&gt; X
+
+(-&gt; &quot;a b c d&quot;
+    (.toUpperCase)
+    (.replace &quot;A&quot; &quot;X&quot;)
+    (.split &quot; &quot;)
+    (first)) ;=&gt; X
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-47" style="background:;">
+  <hgroup>
+    <h2>Useful Built-in Macro (cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <h4>(-&gt;&gt; x form &amp; more)</h4>
+
+<pre><code class="Clojure">(def c 5)
+(-&gt;&gt; c (+ 3) (/ 2) (- 1)) ;=&gt; 3/4
+;; (-1 (/ 2 (+3 c)))
+</code></pre>
+
+<pre><code class="clojure">(reduce +
+        (take 10
+              (filter even?
+                      (map #(* % %)
+                           (range)))))  ;=&gt; 1140
+
+(-&gt;&gt; (range)
+     (map #(* % %))
+     (filter even?)
+     (take 10)
+     (reduce +)) ;=&gt; 1140                          
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-48" style="background:;">
+  <hgroup>
+    <h2>Useful Built-in Macro (cont.)</h2>
+  </hgroup>
+  <article data-timings="">
+    <h4>(doto x &amp; forms)</h4>
+
+<pre><code class="Clojure">(import javax.swing.JFrame)
+
+(doto (JFrame.)
+  (.setTitle &quot;title&quot;)
+  (.setBackground java.awt.Color/white)
+  (.setSize (java.awt.Dimension. 500 500))
+  (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE)
+  (.setVisible true))
+</code></pre>
+
+<pre><code class="clojure">(doto (java.util.HashMap.)
+  (.put &quot;a&quot; 1)
+  (.put &quot;b&quot; 2)
+  (.put &quot;c&quot; 3)) ;=&gt; #&lt;HashMap {b=2, a=1, c=3}&gt;   
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-49" style="background:;">
   <hgroup>
     <h2>Q &amp; A</h2>
   </hgroup>
@@ -854,7 +1276,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-35" style="background:;">
+<slide class="" id="slide-50" style="background:;">
   <hgroup>
     <h2>Some Learning Material</h2>
   </hgroup>
@@ -950,43 +1372,43 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Hello World'>
+        data-slide=10 title='S-Expressions'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Hello World with parameter'>
+        data-slide=11 title='Actomic Data Types'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Actomic Data Types'>
+        data-slide=12 title='Some Code'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Some Demo'>
+        data-slide=13 title='Alan J. Perlis (Epigrams on Programming)'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Alan J. Perlis (Epigrams on Programming)'>
+        data-slide=14 title='Clojure Data Structures'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Clojure Data Structures'>
+        data-slide=15 title='Some Code'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Some Code'>
+        data-slide=16 title='Some Code (cont.)'>
          16
       </a>
     </li>
@@ -998,110 +1420,200 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Some Code (cont.)'>
+        data-slide=18 title='Functions'>
          18
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='Functional programming in Clojure'>
+        data-slide=19 title='Hello World function'>
          19
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='What is Functional programming'>
+        data-slide=20 title='Hello World function with parameter'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Functional Progamming Features'>
+        data-slide=21 title='Functional programming in Clojure'>
          21
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='First-class functions'>
+        data-slide=22 title='What is Functional programming'>
          22
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='First-class functions (Cont.)'>
+        data-slide=23 title='Functional Progamming Features'>
          23
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Recursion'>
+        data-slide=24 title='First-class &amp; Higher-order function'>
          24
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=25 title='Tail-recursion'>
+        data-slide=25 title='First-class &amp; Higher-order function (Cont.)'>
          25
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=26 title='Comp and Partial'>
+        data-slide=26 title='First-class &amp; Higher-order function (Cont.)'>
          26
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=27 title='Map, Reduce and Filter'>
+        data-slide=27 title='Closure'>
          27
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=28 title='Fibonacci Series Example'>
+        data-slide=28 title='Recursion'>
          28
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=29 title='Fibonacci Series Example (Cont.)'>
+        data-slide=29 title='Tail-recursion'>
          29
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=30 title='Fibonacci Series Example (Cont.)'>
+        data-slide=30 title='Tail-recursion with <strong>recur</strong>'>
          30
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=31 title='Fibonacci Series Example (Cont.)'>
+        data-slide=31 title='Partial functions &amp; Compose functions'>
          31
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=32 title='Fibonacci Series Example (Cont.)'>
+        data-slide=32 title='Map, Reduce and Filter'>
          32
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=33 title='Live Demo'>
+        data-slide=33 title='Map, Reduce and Filter'>
          33
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=34 title='Q &amp; A'>
+        data-slide=34 title='Lazy evaluation'>
          34
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=35 title='Some Learning Material'>
+        data-slide=35 title='Fibonacci Series Example'>
          35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Fibonacci Series Example (Cont.)'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='Fibonacci Series Example (Cont.)'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='Fibonacci Series Example (Cont.)'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='Fibonacci Series Example (Cont.)'>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title='Clojure in JVM'>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title='Java Interop'>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title='Java Interop (Cont.)'>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title='Macro'>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title='Macro'>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title='Macro'>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title='Useful Built-in Macro'>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title='Useful Built-in Macro (cont.)'>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title='Useful Built-in Macro (cont.)'>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title='Q &amp; A'>
+         49
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=50 title='Some Learning Material'>
+         50
       </a>
     </li>
   </ul>
@@ -1114,7 +1626,21 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 </body>
   <!-- Load Javascripts for Widgets -->
   
-  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
   <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->
