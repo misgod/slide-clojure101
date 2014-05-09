@@ -1,7 +1,7 @@
 ---
 title       : Clojure 101
 subtitle    : Lisp + Functional + Dynamic = Fun
-author      : Sam Lee
+author      : SzuHsien Lee
 job         : A software engineer on the street
 license     : by-nc-sa
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -228,8 +228,8 @@ x ;=> 100
 (coll? {1 2 3 4}) ;=> true
 
 ;;Seqs are an interface for logical lists, which can be lazy.
-(seq? [1 2 3]) ;=> false
 (seq? '(1 2 3)) ;=> true
+(seq? [1 2 3]) ;=> false
 (seq? #{1 2 3}) ;=> false
 (seq? {1 2 3 4}) ;=> false
 ```
@@ -287,7 +287,7 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 ```clojure
 ;; Anonymous
 (fn [x y] (* x y))
-(fn [& xs] (coll? xs))
+(fn [& xs] (apply * xs))
 (fn sum [x] (+ x (sum dec (x))))
 (sum 10) ;;=> Unable to resolve symbol: sum ...
 
@@ -355,7 +355,7 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 **Functional programming** is a style of building the structure and elements of computer programs, that treats computation as the evaluation of mathematical functions and avoids state and mutable data. </q>
 
 ---
-## Functional Progamming Features
+## Functional Progamming Characteristics
 
 * First-class functions
 
@@ -436,11 +436,11 @@ mymap ;=> {:g "Google" :a "Apple" :h "htc" :s "Samsung"}  ;; immutable
 ```
 
 ```clojure
-(defn grant [uid gid]
+(defn assign [uid gid]
   (let [u uid g gid]
     (fn [method] (check u g method))))
 
-(def check-permission (grant 0 1))
+(def check-permission (assign 0 1))
 
 (check-permission "api/delete")
 
@@ -618,30 +618,10 @@ BTW ... **Curry** is a chain of partial functions each with a single argument
 
 ```
 
-> * Very slow
+> * Very slow & might cause StackOverflowError
 
 ---
-## Fibonacci Series Example (Cont.)
 
-### Memoized recursive version
-
-```clojure
-(defn fib2 [n]
-  (if (< n 2)
-    n
-    (+' (mfib (- n 2)) (mfib (- n 1)))))
-
-(def mfib (memoize fib2))
-```
-```clojure
-(mfib 1000) ;=> StackOverflowError
-
-(take 10000 (map mfib (range))) ;=> (0 1 1 ...)
-```
-
-> * Speed up but StackOverflowError
-
----
 ## Fibonacci Series Example (Cont.)
 
 ### Tail recursion version
@@ -693,6 +673,9 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 (take 10 fib5) ;=> (0 1 1 2 3 5 8 13 21 34)
 ```
 
+--- .segue .dark
+## Java Interop
+
 ---
 ## Clojure in JVM
 
@@ -735,7 +718,7 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 
 (seq foo) ;=> (1 2 3 4)
 
-(.containsAll foo [2 3 4]) ;=> 4
+(.containsAll foo [2 3 4]) ;=> true
 
 
 ```
@@ -761,6 +744,9 @@ fib5  ;=> (0 1 1 2 3 5 8 ...)
 (reverse "abcd") ;=> "dcba"
 
 ```
+
+--- .segue .dark
+## Macro
 
 --- &twocol w1:40% w2:60%
 ## Macro
@@ -891,6 +877,10 @@ A funny example ...
   (.put "c" 3)) ;=> #<HashMap {b=2, a=1, c=3}>   
 
 ```
+
+--- .segue .dark
+
+## DEMO
 
 --- .segue .dark
 ## Q & A

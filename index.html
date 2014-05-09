@@ -4,7 +4,7 @@
   <title>Clojure 101</title>
   <meta charset="utf-8">
   <meta name="description" content="Clojure 101">
-  <meta name="author" content="Sam Lee">
+  <meta name="author" content="SzuHsien Lee">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -37,7 +37,7 @@
   <hgroup class="auto-fadein">
     <h1>Clojure 101</h1>
     <h2>Lisp + Functional + Dynamic = Fun</h2>
-    <p>Sam Lee<br/>A software engineer on the street</p>
+    <p>SzuHsien Lee<br/>A software engineer on the street</p>
   </hgroup>
   <article></article>  
   <footer class = 'license'>
@@ -417,8 +417,8 @@ x ;=&gt; 100
 (coll? {1 2 3 4}) ;=&gt; true
 
 ;;Seqs are an interface for logical lists, which can be lazy.
-(seq? [1 2 3]) ;=&gt; false
 (seq? &#39;(1 2 3)) ;=&gt; true
+(seq? [1 2 3]) ;=&gt; false
 (seq? #{1 2 3}) ;=&gt; false
 (seq? {1 2 3 4}) ;=&gt; false
 </code></pre>
@@ -491,7 +491,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <article data-timings="">
     <pre><code class="clojure">;; Anonymous
 (fn [x y] (* x y))
-(fn [&amp; xs] (coll? xs))
+(fn [&amp; xs] (apply * xs))
 (fn sum [x] (+ x (sum dec (x))))
 (sum 10) ;;=&gt; Unable to resolve symbol: sum ...
 
@@ -584,7 +584,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 
 <slide class="" id="slide-23" style="background:;">
   <hgroup>
-    <h2>Functional Progamming Features</h2>
+    <h2>Functional Progamming Characteristics</h2>
   </hgroup>
   <article data-timings="">
     <ul>
@@ -689,11 +689,11 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 (time3 10) ;=&gt; 30
 </code></pre>
 
-<pre><code class="clojure">(defn grant [uid gid]
+<pre><code class="clojure">(defn assign [uid gid]
   (let [u uid g gid]
     (fn [method] (check u g method))))
 
-(def check-permission (grant 0 1))
+(def check-permission (assign 0 1))
 
 (check-permission &quot;api/delete&quot;)
 
@@ -922,7 +922,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 </code></pre>
 
 <ul class = "build incremental">
-<li>Very slow</li>
+<li>Very slow &amp; might cause StackOverflowError</li>
 </ul>
 
   </article>
@@ -930,34 +930,6 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 </slide>
 
 <slide class="" id="slide-36" style="background:;">
-  <hgroup>
-    <h2>Fibonacci Series Example (Cont.)</h2>
-  </hgroup>
-  <article data-timings="">
-    <h3>Memoized recursive version</h3>
-
-<pre><code class="clojure">(defn fib2 [n]
-  (if (&lt; n 2)
-    n
-    (+&#39; (mfib (- n 2)) (mfib (- n 1)))))
-
-(def mfib (memoize fib2))
-</code></pre>
-
-<pre><code class="clojure">(mfib 1000) ;=&gt; StackOverflowError
-
-(take 10000 (map mfib (range))) ;=&gt; (0 1 1 ...)
-</code></pre>
-
-<ul class = "build incremental">
-<li>Speed up but StackOverflowError</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-37" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
@@ -981,7 +953,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-38" style="background:;">
+<slide class="" id="slide-37" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
@@ -1004,7 +976,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-39" style="background:;">
+<slide class="" id="slide-38" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
@@ -1019,6 +991,16 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 (take 10 fib5) ;=&gt; (0 1 1 2 3 5 8 13 21 34)
 </code></pre>
 
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-39" style="background:;">
+  <hgroup>
+    <h2>Java Interop</h2>
+  </hgroup>
+  <article data-timings="">
+    
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -1070,7 +1052,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
 
 (seq foo) ;=&gt; (1 2 3 4)
 
-(.containsAll foo [2 3 4]) ;=&gt; 4
+(.containsAll foo [2 3 4]) ;=&gt; true
 
 
 </code></pre>
@@ -1105,7 +1087,17 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-43" style="background:;">
+<slide class="segue dark" id="slide-43" style="background:;">
+  <hgroup>
+    <h2>Macro</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-44" style="background:;">
   <hgroup>
     <h2>Macro</h2>
   </hgroup>
@@ -1131,7 +1123,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-44" style="background:;">
+<slide class="" id="slide-45" style="background:;">
   <hgroup>
     <h2>Macro</h2>
   </hgroup>
@@ -1151,7 +1143,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-45" style="background:;">
+<slide class="" id="slide-46" style="background:;">
   <hgroup>
     <h2>Macro</h2>
   </hgroup>
@@ -1183,7 +1175,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-46" style="background:;">
+<slide class="" id="slide-47" style="background:;">
   <hgroup>
     <h2>Useful Built-in Macro</h2>
   </hgroup>
@@ -1213,7 +1205,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-47" style="background:;">
+<slide class="" id="slide-48" style="background:;">
   <hgroup>
     <h2>Useful Built-in Macro (cont.)</h2>
   </hgroup>
@@ -1242,7 +1234,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-48" style="background:;">
+<slide class="" id="slide-49" style="background:;">
   <hgroup>
     <h2>Useful Built-in Macro (cont.)</h2>
   </hgroup>
@@ -1270,7 +1262,17 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-49" style="background:;">
+<slide class="segue dark" id="slide-50" style="background:;">
+  <hgroup>
+    <h2>DEMO</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-51" style="background:;">
   <hgroup>
     <h2>Q &amp; A</h2>
   </hgroup>
@@ -1280,7 +1282,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-50" style="background:;">
+<slide class="" id="slide-52" style="background:;">
   <hgroup>
     <h2>Some Learning Material</h2>
   </hgroup>
@@ -1454,7 +1456,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Functional Progamming Features'>
+        data-slide=23 title='Functional Progamming Characteristics'>
          23
       </a>
     </li>
@@ -1550,7 +1552,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=39 title='Fibonacci Series Example (Cont.)'>
+        data-slide=39 title='Java Interop'>
          39
       </a>
     </li>
@@ -1592,13 +1594,13 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=46 title='Useful Built-in Macro'>
+        data-slide=46 title='Macro'>
          46
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=47 title='Useful Built-in Macro (cont.)'>
+        data-slide=47 title='Useful Built-in Macro'>
          47
       </a>
     </li>
@@ -1610,14 +1612,26 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=49 title='Q &amp; A'>
+        data-slide=49 title='Useful Built-in Macro (cont.)'>
          49
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=50 title='Some Learning Material'>
+        data-slide=50 title='DEMO'>
          50
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=51 title='Q &amp; A'>
+         51
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=52 title='Some Learning Material'>
+         52
       </a>
     </li>
   </ul>
