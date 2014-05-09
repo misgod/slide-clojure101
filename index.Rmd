@@ -1,6 +1,6 @@
 ---
 title       : Clojure 101
-subtitle    : Lisp + Functional + Dynamic = Fun
+subtitle    : Lisp + Functional + Dynamic + Java = Fun
 author      : SzuHsien Lee
 job         : A software engineer on the street
 license     : by-nc-sa
