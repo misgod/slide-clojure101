@@ -49,7 +49,7 @@ strong {
 
 
 --- bg:#CCC
-### Alan J. Perlis (Epigrams on Programming)
+### Alan J. Perlis ([Epigrams on Programming](http://pu.inf.uni-tuebingen.de/users/klaeren/epigrams.html))
 
 <q>"A language that doesn't affect the way you think about programming, is not worth knowing. " </q>
 

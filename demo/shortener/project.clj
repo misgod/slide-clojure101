@@ -7,5 +7,4 @@
                  [ring "1.2.2"]
                  [compojure "1.1.6"]
                  [enlive "1.1.5"]]
-  :main shortener.core
-  )
+  :main shortener.core)

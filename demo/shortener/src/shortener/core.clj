@@ -28,7 +28,6 @@
 
 
 
-
 (html/deftemplate main "index.html" [])
 
 
@@ -43,7 +42,8 @@
                                          (shorten)
                                          (concat-url)))
 
-  (GET "/:id" [id] (redirect id))
+  (GET "/:id" [id] (redirect id)
+       )
   (route/not-found "<h1>Page not found</h1>"))
 
 
@@ -53,9 +53,12 @@
 
 
 
-;(def server (runServer 8888 false))
+(def server (runServer 8888 false))
 
-;(.stop server)
+(.stop server)
+
+
+
 
 
 (defn -main
