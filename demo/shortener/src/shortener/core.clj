@@ -15,7 +15,6 @@
 
 (defn gen-id! [] (num2id (swap! index inc)))
 
-
 (defn shorten
   "Generate a short id for url"
   [url]
@@ -26,11 +25,7 @@
 (defn concat-url
   [id] (str "http://localhost:8888/" id))
 
-
-
 (html/deftemplate main "index.html" [])
-
-
 
 (defn redirect
   [id]
@@ -41,9 +36,7 @@
   (POST "/shorten" {params :params} (->> (:user_url params)
                                          (shorten)
                                          (concat-url)))
-
-  (GET "/:id" [id] (redirect id)
-       )
+  (GET "/:id" [id] (redirect id))
   (route/not-found "<h1>Page not found</h1>"))
 
 
@@ -52,14 +45,10 @@
   (run-jetty (handler/site app) {:port port :join? join}))
 
 
+;;;below 2 forms are for interactive programming demo ...
+;;(def server (runServer 8888 false))
 
-(def server (runServer 8888 false))
-
-(.stop server)
-
-
-
-
+;;(.stop server)
 
 (defn -main
   [& args]
