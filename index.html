@@ -271,7 +271,7 @@ strong {
   </hgroup>
   <article data-timings="">
     <ul>
-<li><p>REPL</p></li>
+<li><p>REPL (Read-Eval-Print-Loop)</p></li>
 <li><p>Light Table (newbie)</p></li>
 <li><p>Eclipse with Counterclockwise</p></li>
 <li><p>Intellij IDEA with La Clojure</p></li>
@@ -323,7 +323,7 @@ strong {
 
 <slide class="" id="slide-11" style="background:;">
   <hgroup>
-    <h2>Actomic Data Types</h2>
+    <h2>Atomic Data Types</h2>
   </hgroup>
   <article data-timings="">
     <ul>
@@ -958,6 +958,28 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
   <article data-timings="">
+    <h3>Trampoline version</h3>
+
+<pre><code class="clojure">(defn fact [n]
+  (letfn [(f [i a]
+            (if (&lt;= i 1)
+              a
+              #(f (dec i) (* i a))))]
+         (f n 1)))
+</code></pre>
+
+<pre><code class="clojure">(count (str (trampoline fact 10000N))) ;=&gt; 35660
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-38" style="background:;">
+  <hgroup>
+    <h2>Fibonacci Series Example (Cont.)</h2>
+  </hgroup>
+  <article data-timings="">
     <h3>Lazy version -1</h3>
 
 <pre><code class="clojure">(def fib4
@@ -976,7 +998,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-38" style="background:;">
+<slide class="" id="slide-39" style="background:;">
   <hgroup>
     <h2>Fibonacci Series Example (Cont.)</h2>
   </hgroup>
@@ -995,7 +1017,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-39" style="background:;">
+<slide class="segue dark" id="slide-40" style="background:;">
   <hgroup>
     <h2>Java Interop</h2>
   </hgroup>
@@ -1005,7 +1027,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-40" style="background:;">
+<slide class="" id="slide-41" style="background:;">
   <hgroup>
     <h2>Clojure in JVM</h2>
   </hgroup>
@@ -1029,7 +1051,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-41" style="background:;">
+<slide class="" id="slide-42" style="background:;">
   <hgroup>
     <h2>Java Interop</h2>
   </hgroup>
@@ -1061,7 +1083,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-42" style="background:;">
+<slide class="" id="slide-43" style="background:;">
   <hgroup>
     <h2>Java Interop (Cont.)</h2>
   </hgroup>
@@ -1087,7 +1109,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-43" style="background:;">
+<slide class="segue dark" id="slide-44" style="background:;">
   <hgroup>
     <h2>Macro</h2>
   </hgroup>
@@ -1097,7 +1119,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-44" style="background:;">
+<slide class="" id="slide-45" style="background:;">
   <hgroup>
     <h2>Macro</h2>
   </hgroup>
@@ -1123,7 +1145,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-45" style="background:;">
+<slide class="" id="slide-46" style="background:;">
   <hgroup>
     <h2>Macro</h2>
   </hgroup>
@@ -1143,7 +1165,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-46" style="background:;">
+<slide class="" id="slide-47" style="background:;">
   <hgroup>
     <h2>Macro</h2>
   </hgroup>
@@ -1175,7 +1197,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-47" style="background:;">
+<slide class="" id="slide-48" style="background:;">
   <hgroup>
     <h2>Useful Built-in Macro</h2>
   </hgroup>
@@ -1205,7 +1227,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-48" style="background:;">
+<slide class="" id="slide-49" style="background:;">
   <hgroup>
     <h2>Useful Built-in Macro (cont.)</h2>
   </hgroup>
@@ -1234,7 +1256,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-49" style="background:;">
+<slide class="" id="slide-50" style="background:;">
   <hgroup>
     <h2>Useful Built-in Macro (cont.)</h2>
   </hgroup>
@@ -1262,7 +1284,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-50" style="background:;">
+<slide class="segue dark" id="slide-51" style="background:;">
   <hgroup>
     <h2>DEMO</h2>
   </hgroup>
@@ -1272,7 +1294,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-51" style="background:;">
+<slide class="segue dark" id="slide-52" style="background:;">
   <hgroup>
     <h2>Q &amp; A</h2>
   </hgroup>
@@ -1282,7 +1304,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-52" style="background:;">
+<slide class="" id="slide-53" style="background:;">
   <hgroup>
     <h2>Some Learning Material</h2>
   </hgroup>
@@ -1384,7 +1406,7 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Actomic Data Types'>
+        data-slide=11 title='Atomic Data Types'>
          11
       </a>
     </li>
@@ -1552,31 +1574,31 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=39 title='Java Interop'>
+        data-slide=39 title='Fibonacci Series Example (Cont.)'>
          39
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=40 title='Clojure in JVM'>
+        data-slide=40 title='Java Interop'>
          40
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=41 title='Java Interop'>
+        data-slide=41 title='Clojure in JVM'>
          41
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=42 title='Java Interop (Cont.)'>
+        data-slide=42 title='Java Interop'>
          42
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=43 title='Macro'>
+        data-slide=43 title='Java Interop (Cont.)'>
          43
       </a>
     </li>
@@ -1600,13 +1622,13 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=47 title='Useful Built-in Macro'>
+        data-slide=47 title='Macro'>
          47
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=48 title='Useful Built-in Macro (cont.)'>
+        data-slide=48 title='Useful Built-in Macro'>
          48
       </a>
     </li>
@@ -1618,20 +1640,26 @@ mymap ;=&gt; {:g &quot;Google&quot; :a &quot;Apple&quot; :h &quot;htc&quot; :s &
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=50 title='DEMO'>
+        data-slide=50 title='Useful Built-in Macro (cont.)'>
          50
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=51 title='Q &amp; A'>
+        data-slide=51 title='DEMO'>
          51
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=52 title='Some Learning Material'>
+        data-slide=52 title='Q &amp; A'>
          52
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=53 title='Some Learning Material'>
+         53
       </a>
     </li>
   </ul>

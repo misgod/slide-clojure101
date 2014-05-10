@@ -151,7 +151,7 @@ A Clojure form, and parameter can also be a form.
 ```
 
 ---
-## Actomic Data Types
+## Atomic Data Types
 
 * Boolean:  <g> true false </g>
 
@@ -621,7 +621,6 @@ BTW ... **Curry** is a chain of partial functions each with a single argument
 > * Very slow & might cause StackOverflowError
 
 ---
-
 ## Fibonacci Series Example (Cont.)
 
 ### Tail recursion version
@@ -638,6 +637,22 @@ BTW ... **Curry** is a chain of partial functions each with a single argument
 
 (count (str (fib3 100000))) ;=> 20899
 
+```
+
+---
+## Fibonacci Series Example (Cont.)
+### Trampoline version
+```clojure
+(defn fact [n]
+  (letfn [(f [i a]
+            (if (<= i 1)
+              a
+              #(f (dec i) (* i a))))]
+         (f n 1)))
+```
+
+```clojure
+(count (str (trampoline fact 10000N))) ;=> 35660
 ```
 
 ---
